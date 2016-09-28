@@ -2,16 +2,24 @@ var SlackMessage = require('./SlackMessage');
 var User         = require('./User');
 
 class SlackCommand extends SlackMessage{
-    constructor(message){
+    /**
+     *
+     * @param message - A JSON message object from the slack API
+     * @param splice_count - The amount of args (words) before the actual command. This is 1 by default because the default usage for commands is @botuser command_name args
+     */
+
+    constructor(message, args_before){
+        args_before = args_before || 1;
+
         super(message);
 
         this._args    = this.getText().split(' ');
 
         for(var arg in this._args) if(this._args[arg].trim() == '') args.splice(arg, 1);
 
-        this._name    = this._args[1];
+        this._name    = this._args[args_before];
 
-        this._args.splice(0,2);
+        this._args.splice(0, args_before+1);
     }
 
     getName(){

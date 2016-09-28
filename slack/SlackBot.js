@@ -39,21 +39,20 @@ class SlackBot extends EventEmitter{
         });
 
         emitter.on('message', (message)=>{
-            message = new SlackMessage(message);
+            var slackMessage = new SlackMessage(message);
+
+            this.emit('message', slackMessage);
 
             //Checks to make sure that the sender is not the bot
-            if(message.getUser() == this.getUserID()) return;
+            if(slackMessage.getUser() == this.getUserID()) return;
 
             // Checks to see if the message begins with _bot mention (which is command prefix)
-            if(message.getText().startsWith(this.getMention())) emitter.emit('command', message);
+            if(slackMessage.getText().startsWith(this.getMention())) emitter.emit('command', new CommandMessage(message));
         });
 
-        emitter.on('command', (slackMessage)=>{
-            //Creates a commandMessage (which extends SlackMessage) using the SlackMessage's getMessage()... weird.
-            var commandMessage = new CommandMessage(slackMessage.getMessage());
-
+        emitter.on('command', (message)=>{
             //Creates a command using the commandMessage's command name method.
-            var command        = slackCommands.get(commandMessage.getName());
+            var command        = slackCommands.get(message.getName());
 
             //If the command doesn't exist, return so that isAlias is not undefined.
             if(!command) return;
@@ -65,14 +64,11 @@ class SlackBot extends EventEmitter{
             if(!command) return;
 
             //Ensures that the command has the correct amount of arguments
-            if(commandMessage.getArgs().length > command.getMax()) return this.getUtils().chat.postMessage(commandMessage.getMessage().getChannel(), `${commandMessage.getMessage().getUser().getMention()} Too many arguments!`, 'SELF');
-            if(commandMessage.getArgs().length < command.getMin()) return this.getUtils().chat.postMessage(commandMessage.getMessage().getChannel(), `${commandMessage.getMessage().getUser().getMention()} Not enough arguments!`, 'SELF');
+            if(message.getArgs().length > command.getMax()) return this.getUtils().chat.postMessage(message.getMessage().getChannel(), `${message.getMessage().getUser().getMention()} Too many arguments!`, 'SELF');
+            if(message.getArgs().length < command.getMin()) return this.getUtils().chat.postMessage(message.getMessage().getChannel(), `${message.getMessage().getUser().getMention()} Not enough arguments!`, 'SELF');
 
             //Emits a command event so that I can run it with any wanted parameters.
-            this.emit('command', {
-                message: commandMessage,
-                command: command
-            });
+            this.emit('command', message);
         });
 
     }

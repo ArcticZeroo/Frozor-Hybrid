@@ -2,13 +2,14 @@ var User = require('./User');
 
 class SlackMessage{
     constructor(message){
-        this._message = message;
-        this._user    = message.user;
-        this.user     = new User(this._user);
-        this._text    = message.text;
-        this._channel = message.channel;
-        this._ts      = message.ts;
-        this._subtype = message.subtype;
+        this._message   = message;
+        this._user      = message.user;
+        this.user       = new User(this._user);
+        this._text      = message.text;
+        this._channel   = message.channel;
+        this._ts        = message.ts;
+        this._subtype   = message.subtype;
+        this._isCommand = false;
     }
 
     /**
@@ -63,6 +64,14 @@ class SlackMessage{
 
     getMessage(){
         return this._message;
+    }
+
+    setCommand(bool){
+        if(bool == true || bool == false) this._isCommand = bool;
+    }
+
+    isCommand(){
+        return this._isCommand;
     }
 }
 
