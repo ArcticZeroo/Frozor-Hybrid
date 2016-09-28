@@ -1,7 +1,8 @@
 {
-  "name": "Self-Bot",
-  "description": "Minecraft bot that can be controlled in slack",
+  "name": "frozor-hybrid",
+  "description": "Slack+Minecraft bots with an OKish API",
   "version": "0.0.1",
+  "main": "index.js",
   "dependencies": {
     "chalk": "^1.1.3",
     "frozor-logger": "^1.0.4",
