@@ -93,6 +93,10 @@ class MinecraftBot extends EventEmitter{
         return this._bot;
     }
 
+    getUsername(){
+        return this.getBot().username;
+    }
+
     registerEvents(){
         this.getBot().on('login', ()=>{
             log.info(`Logged into ${log.chalk.cyan(this.host)} as ${log.chalk.cyan(this._bot.username)}`, "SELF");
@@ -104,10 +108,16 @@ class MinecraftBot extends EventEmitter{
 
             var coloredMessage = this.consoleColorChat(message, packet);
 
+            if(log.chalk.stripColor(coloredMessage).indexOf('GWEN >') > -1) return;
+
             log.info(coloredMessage, "SELF|CHAT");
 
             this.self.emit('chat', message.replace(/\u00A7[0-9A-FK-OR]/ig,''));
         });
+
+        this.getBot().on('kicked', (reason)=>{
+            log.error(`I just got kicked for the reason ${log.chalk.red(reason)}!`);
+        })
 
     }
 
