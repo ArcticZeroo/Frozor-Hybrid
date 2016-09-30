@@ -126,6 +126,11 @@ class MinecraftBot extends EventEmitter{
 
         if(split.length == 1){
             var extra = packet.json.extra;
+            if(!extra){
+                log.debug(packet);
+                return chat;
+            }
+
             for(var item of extra){
                 var colorCode = item.color;
                 var colorCodeFunction = json_color_to_chalk[colorCode];
