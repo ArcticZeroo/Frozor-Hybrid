@@ -1,10 +1,12 @@
 class Command{
     constructor(json){
-        this._json    = json;
-        this._name    = json.name;
-        this._args    = json.args;
-        this._process = json.process;
-        this._alias   = json.alias;
+        this._json       = json;
+        this._name       = json.name;
+        this._args       = json.args;
+        this._process    = json.process;
+        this._alias      = json.alias;
+        this._successful = true;
+        this._message    = null;
     }
 
     isAlias(){
@@ -38,6 +40,25 @@ class Command{
 
     getProcess(){
         return this._process;
+    }
+
+    setMessage(message){
+        this._message = message;
+    }
+
+    getMessage(){
+        return this._message;
+    }
+
+    /**
+     * @param {Boolean} bool
+     */
+    setSuccessful(bool){
+        this._successful = bool;
+    }
+
+    isSuccessful(){
+        return this._successful
     }
 }
 
