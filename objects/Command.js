@@ -18,12 +18,22 @@ class Command{
         return this._alias;
     }
 
+    getAlias(CommandUtil){
+        if(!this.isAlias()) return null;
+        return CommandUtil.get(this.getAliasName());
+    }
+
     getJSON(){
         return this._json;
     }
 
     getName(){
         return this._name;
+    }
+
+    getFinalName(){
+        if(this.isAlias()) return this.getAliasName();
+        return this.getName();
     }
 
     getArgs(){
