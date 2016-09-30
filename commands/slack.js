@@ -1,4 +1,4 @@
-var CommandUtil = require('./CommandUtil');
+var CommandUtil = require('./../objects/CommandUtil');
 var Punishment  = require('../objects/Punish/Punishment');
 var Error       = require('../objects/Error');
 var log         = require('frozor-logger');
@@ -18,6 +18,7 @@ var commands = {
             });
         }
     },
+    end: {alias: 'exit'},
     chat:{
         name: 'chat',
         args: {
@@ -54,7 +55,6 @@ var commands = {
             });
         }
     }
-
 }
 
 module.exports = new CommandUtil(commands);

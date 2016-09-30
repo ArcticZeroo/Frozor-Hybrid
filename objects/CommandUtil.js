@@ -1,4 +1,4 @@
-var Command = require('../objects/Command');
+var Command = require('./Command');
 
 class CommandUtil{
     constructor(commands){
