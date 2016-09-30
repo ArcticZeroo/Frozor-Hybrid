@@ -1,4 +1,5 @@
 var User = require('./User');
+var CommandMessage = require('./CommandMessage');
 
 class SlackMessage{
     constructor(message){
@@ -66,12 +67,12 @@ class SlackMessage{
         return this._message;
     }
 
-    setCommand(bool){
-        if(bool == true || bool == false) this._isCommand = bool;
+    toCommandMessage(){
+        return new CommandMessage(this.getMessage());
     }
 
-    isCommand(){
-        return this._isCommand;
+    sendAutoReply(slackUtils, message){
+        slackUtils.chat.postMessage(this.getChannel(), `${this.getUser().getMention()} ${message}`);
     }
 }
 
