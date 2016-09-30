@@ -71,6 +71,10 @@ class SlackMessage{
         return new CommandMessage(this.getMessage());
     }
 
+    /**
+     * @param slackUtils
+     * @param {string} message
+     */
     sendAutoReply(slackUtils, message){
         slackUtils.chat.postMessage(this.getChannel(), `${this.getUser().getMention()} ${message}`);
     }

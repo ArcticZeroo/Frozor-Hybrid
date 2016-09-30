@@ -1,3 +1,4 @@
+var Error          = require('../objects/Error');
 var Command        = require('../objects/Command');
 var CommandMessage = require('../objects/CommandMessage')
 
@@ -7,28 +8,26 @@ var CommandMessage = require('../objects/CommandMessage')
  * @param {function} callback
  * @returns {*}
  */
-function runCommand(SlackMessage, CommandUtil, callback){
-    var commandMessage = new CommandMessage(SlackMessage.getMessage());
+function runCommand(commandMessage, CommandUtil, callback){
+    if(!callback) return;
+
+    //Creates an instance of Command using the commandMessage's command name method.
+    /**
+     * @type {Command}
+     */
     var command = CommandUtil.get(commandMessage.getName());
-    
-    //If the command doesn't exist, return so that isAlias is not undefined.
-    if(!command) return callback(false, Error.COMMAND_UNDEFINED);
 
     //If the command is an alias, it the `command` object will be turned into the one for the alias.
-    if(command.isAlias()) CommandUtil.get(command.getAliasName());
+    if(command && command.isAlias()) command = command.getAlias(CommandUtil);
 
-    //If the command's alias doesn't exist, don't run it!
-    if(!command) return callback(false, Error.COMMAND_ALIAS_UNDEFINED);
+    //If the command doesn't actually exist... don't run it.
+    if(!command) return callback(false, Error.COMMAND_UNDEFINED);
 
     //Ensures that the command has the correct amount of arguments
-    if(commandMessage.getArgs().length > command.getMax())
-    if(commandMessage.getArgs().length < command.getMin()) return this.getUtils().chat.postMessage(commandMessage.getMessage().getChannel(), `${commandMessage.getMessage().getUser().getMention()} Not enough arguments!`);
+    if(commandMessage.getArgs().length > command.getMax()) return callback(false, Error.COMMAND_TOO_MANY_ARGS);
+    if(commandMessage.getArgs().length < command.getMin()) return callback(false, Error.COMMAND_NOT_ENOUGH_ARGS);
 
-    //Emits returns with commandMessage and command so I can have whatever parameters I want
-    if(callback) callback(true, {
-        message: commandMessage,
-        command: command
-    });
+    return callback(true, command);
 }
 
 exports.run = runCommand;
