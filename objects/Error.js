@@ -1,4 +1,4 @@
-global.Error = {
+module.exports = {
     WINDOW_OPEN_TIMEOUT: "window_open_timeout",
     WINDOW_CLICK_ERROR: "window_click_error",
     WINDOW_WRONG_OPEN: "window_wrong_open",
