@@ -1,4 +1,6 @@
 var slack = require('./slack');
+var RunCommand = require('./RunCommand');
 module.exports = {
-    Slack: slack
+    Slack: slack,
+    RunCommand: RunCommand
 };
