@@ -47,34 +47,8 @@ class SlackBot extends EventEmitter{
             if(slackMessage.getUser() == this.getUserID()) return;
 
             // Checks to see if the message begins with _bot mention (which is command prefix)
-            if(slackMessage.getText().startsWith(this.getMention())) emitter.emit('command', new CommandMessage(message));
+            if(slackMessage.getText().startsWith(this.getMention())) this.emit('command', new CommandMessage(message));
         });
-
-        /**
-         * @param {CommandMessage} message - The CommandMessage for the command
-         */
-        emitter.on('command', (message)=>{
-            //Creates an instance of Command using the commandMessage's command name method.
-            /**
-             * @type {Command}
-             */
-            var command = slackCommands.get(message.getName());
-
-            //If the command is an alias, it the `command` object will be turned into the one for the alias.
-            if(command && command.isAlias()) command = command.getAlias(slackCommands);
-
-            //If the command doesn't actually exist... don't run it.
-            if(!command) return;
-
-            //Ensures that the command has the correct amount of arguments
-            if(message.getArgs().length > command.getMax()) return this.getUtils().chat.postMessage(message.getMessage().getChannel(), `${message.getMessage().getUser().getMention()} Too many arguments!`, 'SELF');
-            if(message.getArgs().length < command.getMin()) return this.getUtils().chat.postMessage(message.getMessage().getChannel(), `${message.getMessage().getUser().getMention()} Not enough arguments!`, 'SELF');
-
-            //Emits a command event so that I can run it with any wanted parameters.
-            command.setMessage(message);
-            this.emit('command', message);
-        });
-
     }
 
     /**
