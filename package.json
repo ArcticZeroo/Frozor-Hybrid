@@ -4,6 +4,6 @@
   "version": "2.0.0",
   "main": "index.js",
   "dependencies": {
-    "frozor-logger": "^1.0.4",
+    "frozor-logger": "latest"
   }
 }
