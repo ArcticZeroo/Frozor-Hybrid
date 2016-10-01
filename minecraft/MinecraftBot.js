@@ -3,19 +3,19 @@ var log          = require('frozor-logger');
 
 var mc_color_to_chalk = {
     4: log.chalk.red,
-    c: log.chalk.red,
+    c: log.chalk.red.bold,
     6: log.chalk.yellow,
     e: log.chalk.yellow,
     2: log.chalk.green,
     a: log.chalk.green,
-    b: log.chalk.blue,
+    b: log.chalk.blue.bold,
     3: log.chalk.cyan,
     1: log.chalk.blue,
     9: log.chalk.blue,
-    d: log.chalk.magenta,
+    d: log.chalk.magenta.bold,
     5: log.chalk.magenta,
-    f: log.chalk.white,
-    7: log.chalk.gray,
+    f: log.chalk.white.bold,
+    7: log.chalk.white,
     l: log.chalk.bold,
     n: log.chalk.underline,
     o: log.chalk.italics,
@@ -24,22 +24,22 @@ var mc_color_to_chalk = {
 }
 
 var json_color_to_chalk = {
-    black:        log.chalk.black,
+    black:        log.chalk.black.bold,
     dark_blue:    log.chalk.blue,
     dark_green:   log.chalk.green,
     dark_aqua:    log.chalk.cyan,
     dark_red:     log.chalk.red,
     dark_purple:  log.chalk.magenta,
     gold:         log.chalk.yellow,
-    gray:         log.chalk.gray,
-    dark_gray:    log.chalk.black,
+    gray:         log.chalk.white,
+    dark_gray:    log.chalk.gray,
     blue:         log.chalk.blue,
     green:        log.chalk.green,
-    aqua:         log.chalk.cyan,
-    red:          log.chalk.red,
-    light_purple: log.chalk.magenta,
+    aqua:         log.chalk.cyan.bold,
+    red:          log.chalk.red.bold,
+    light_purple: log.chalk.magenta.bold,
     yellow:       log.chalk.yellow,
-    white:        log.chalk.white,
+    white:        log.chalk.white.bold,
     reset:        log.chalk.white
 
 
@@ -110,6 +110,7 @@ class MinecraftBot extends EventEmitter{
 
             if(log.chalk.stripColor(coloredMessage).indexOf('GWEN >') > -1) return;
 
+            if(!coloredMessage) coloredMessage = ' ';
             log.info(coloredMessage, "SELF|CHAT");
 
             this.self.emit('chat', message.replace(/\u00A7[0-9A-FK-OR]/ig,''));

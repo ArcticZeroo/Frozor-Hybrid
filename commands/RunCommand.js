@@ -21,13 +21,13 @@ function runCommand(commandMessage, CommandUtil, callback){
     if(command && command.isAlias()) command = command.getAlias(CommandUtil);
 
     //If the command doesn't actually exist... don't run it.
-    if(!command) return callback(false, Error.COMMAND_UNDEFINED);
+    if(!command) return callback(command, Error.COMMAND_UNDEFINED);
 
     //Ensures that the command has the correct amount of arguments
-    if(commandMessage.getArgs().length > command.getMax()) return callback(false, Error.COMMAND_TOO_MANY_ARGS);
-    if(commandMessage.getArgs().length < command.getMin()) return callback(false, Error.COMMAND_NOT_ENOUGH_ARGS);
+    if(commandMessage.getArgs().length > command.getMax()) return callback(command, Error.COMMAND_TOO_MANY_ARGS);
+    if(commandMessage.getArgs().length < command.getMin()) return callback(command, Error.COMMAND_NOT_ENOUGH_ARGS);
 
-    return callback(true, command);
+    return callback(command);
 }
 
 exports.run = runCommand;
