@@ -1,9 +1,7 @@
 var MinecraftBot = require('./minecraft/MinecraftBot');
 var Commands     = require('./commands/Commands');
-var Objects      = require('./objects/Objects');
 var SlackBot     = require('./slack/SlackBot');
-
-//console.log(Objects);
+var Objects      = require('./objects/Objects');
 
 module.exports = {
     Objects:      Objects,
