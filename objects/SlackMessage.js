@@ -1,5 +1,4 @@
-var User = require('./User');
-var CommandMessage = require('./CommandMessage');
+var User           = require('./User');
 
 class SlackMessage{
     constructor(message){
@@ -65,10 +64,6 @@ class SlackMessage{
 
     getMessage(){
         return this._message;
-    }
-
-    toCommandMessage(){
-        return new CommandMessage(this.getMessage());
     }
 
     /**
