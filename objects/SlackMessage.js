@@ -70,8 +70,8 @@ class SlackMessage{
      * @param slackUtils
      * @param {string} message
      */
-    sendAutoReply(slackUtils, message){
-        slackUtils.chat.postMessage(this.getChannel(), `${this.getUser().getMention()} ${message}`);
+    sendAutoReply(slackUtils, message, callback){
+        slackUtils.chat.postMessage(this.getChannel(), `${this.getUser().getMention()} ${message}`, callback);
     }
 }
 
