@@ -10,5 +10,7 @@ module.exports = {
     COMMAND_UNDEFINED: "command_undefined",
     COMMAND_ALIAS_UNDEFINED: "command_alias_undefined",
     COMMAND_TOO_MANY_ARGS: "command_too_many_args",
-    COMMAND_NOT_ENOUGH_ARGS: "command_not_enough_args"
+    COMMAND_NOT_ENOUGH_ARGS: "command_not_enough_args",
+    PING_TIME_OUT: "ping_time_out",
+    PING_CONNECTION_REFUSED: "ping_connection_refused"
 }
