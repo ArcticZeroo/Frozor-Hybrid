@@ -23,6 +23,8 @@ function runCommand(commandMessage, CommandUtil, callback){
     //If the command doesn't actually exist... don't run it.
     if(!command) return callback(command, Error.COMMAND_UNDEFINED);
 
+    if(command.disabled) return callback(command, Error.COMMAND_DISABLED)
+
     //Ensures that the command has the correct amount of arguments
     if(commandMessage.getArgs().length > command.getMax()) return callback(command, Error.COMMAND_TOO_MANY_ARGS);
     if(commandMessage.getArgs().length < command.getMin()) return callback(command, Error.COMMAND_NOT_ENOUGH_ARGS);
